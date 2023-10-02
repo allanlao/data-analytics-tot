@@ -582,7 +582,37 @@ Bivariate analysis refers to the analysis of two variables to determine **relati
 - **Numerical and Categorical** – When one variable is numerical and one is categorical.
 
 ---
-#BiVariate Analysis
+
+Numerical and Numerical
+
+```r
+# Get only flights from American Airlines
+AA &lt;- subset(hflights, UniqueCarrier == "AA" )
+plot(x= AA$ArrDelay , y= AA$DepDelay,  xlab = "Arrival Delay",  ylab = "Departure Delay", col = "dodgerblue1")
+```
+
+&lt;img src="eda-basics_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+---
+Numerical and Categorical
+
+```r
+plot(AA$ArrDelay ~ AA$DayOfWeek , xlab = "Day of Week",  ylab = "Arrival Delay", col = "dodgerblue1")
+```
+
+&lt;img src="eda-basics_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+---
+Categorical and Categorical
+
+
+```r
+plot(as.factor(df$DayOfWeek) ~ as.factor(df$Origin))
+```
+
+&lt;img src="eda-basics_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+---
+class: inverse, center, middle
+
+#Next : Data Manipulation
 
 
 

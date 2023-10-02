@@ -104,7 +104,7 @@ unique(df$Origin)
 Since Origin appears to have categorical values of **IAH** and **HOU** only then convert to Factor
 Examine also DayOfWeek  and Month as possible factors. 
 
-```{r}
+```{r include=TRUE}
 df$Origin <- as.factor(df$Origin)
 class(df$Origin)
 ```
@@ -196,7 +196,29 @@ Bivariate analysis refers to the analysis of two variables to determine **relati
 - **Numerical and Categorical** – When one variable is numerical and one is categorical.
 
 ---
-#BiVariate Analysis
+
+Numerical and Numerical
+```{r }
+# Get only flights from American Airlines
+AA <- subset(hflights, UniqueCarrier == "AA" )
+plot(x= AA$ArrDelay , y= AA$DepDelay,  xlab = "Arrival Delay",  ylab = "Departure Delay", col = "dodgerblue1")
+```
+---
+Numerical and Categorical
+```{r}
+plot(AA$ArrDelay ~ AA$DayOfWeek , xlab = "Day of Week",  ylab = "Arrival Delay", col = "dodgerblue1")
+```
+---
+Categorical and Categorical
+
+```{r}
+plot(as.factor(df$DayOfWeek) ~ as.factor(df$Origin))
+
+```
+---
+class: inverse, center, middle
+
+#Next : Data Manipulation
 
 
 

@@ -1,0 +1,157 @@
+---
+title: "Exploring Datasets"
+header-includes:
+  - \usepackage{draftwatermark}
+author: "Allan R. Lao"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning = FALSE, message = FALSE)
+```
+\SetWatermarkText{DRAFT}
+
+
+### Objective
+To demonstrate data exploration using mtcars, a dataset with a small number of observations and variables. The data in mtcars were extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). Exploring a dataset may require several steps.
+
+### A. Exploring using base R.
+Basic exploration using built-in R functions 
+
+### 1. Loading the dataset
+
+By entering the name of the dataset in the RStudio console pane (the lower left quadrant of the RStudio layout) or in the RStudio source pane (the upper left quadrant of the RStudio layout) will print the dataset shown below, in the console:
+
+
+```{r}
+mtcars
+```
+
+
+### 2. Structure of the dataset
+This provides an overview of the total observations, variables, its data type and some values
+
+```{r}
+str(mtcars)
+```
+
+### 3. Dimension of the dataset
+Total number of observations and columns
+
+```{r}
+dim(mtcars)
+
+```
+
+* _The are `r nrow(mtcars)` observations and `r ncol(mtcars)` variables in mtcars dataset_
+
+### 4. Name of columns
+Identify the column names of the dataset
+
+```{r}
+names(mtcars)
+```
+
+
+### 5. Head of the dataset
+```{r}
+head(mtcars)
+```
+
+### 6. Tail of the dataset
+```{r}
+tail(mtcars)
+```
+
+### 7. Extract first 5 rows of the dataset
+```{r}
+mtcars[1:5,]
+```
+
+### 8. Extract first 5 columns of the dataset
+```{r}
+mtcars[,1:5]
+```
+
+### 9. Summarize the dataset
+Computes summary statistics of data and model objects
+```{r}
+summary(mtcars)
+```
+
+### 9. Extract specific named column of the dataset. Ex. Cylinder
+```{r}
+mtcars$cyl
+```
+
+
+### 9. Get unique values of specific named column of the dataset. Ex. Cylinder
+```{r}
+unique(mtcars$cyl)
+```
+
+
+### C. Visualizing using base R graphics.
+Basic exploration using built it graphics function
+
+
+### 1. Histogram of hp
+```{r}
+hist(mtcars$hp)
+```
+\
+* _Majority of cars have hp between 50 to 250 _
+
+
+### 2. Plot density of wt
+```{r}
+plot(density(mtcars$wt))
+```
+
+### 3. Get table of group by gear 
+```{r}
+table(mtcars$gear)
+```
+
+### 4. Pie chart of gear
+```{r}
+pie(table(mtcars$gear))
+```
+
+
+### Barplot of gear
+```{r}
+barplot(table(mtcars$gear))
+```
+
+
+
+
+### D. Exploring the  using the explore package
+
+The explore package simplifies Exploratory Data Analysis (EDA). Get faster insights with less code!
+
+The mtcars dataset comes with the dplyr package. We use the packages explore and dplyr (for mtcars, select, mutate and the %>% operator).
+
+### 1. Load the needed packages
+
+```{r}
+library(dplyr)
+library(explore)
+```
+
+
+```{r}
+mtcars %>% explore_tbl()
+```
+
+
+### 2. Number of gears
+Is there a difference between cars with 3,4 and 5 gears?
+
+```{r}
+mtcars %>% 
+  explore(gear)
+```
+
