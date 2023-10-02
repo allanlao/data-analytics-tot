@@ -17,7 +17,7 @@ d3 <- hflights %>% filter(Origin == "IAH"
                           & DepDelay>0 
                           & UniqueCarrier=="UA")
 
-
+df<- as.data.frame(hflights)
 
 ###Select
 
@@ -43,5 +43,5 @@ d3 <- hflights %>% select(1:3)
 t <- mtcars %>%
   summarise( n = n())
 
-
+ plot(hflights$,hflights$AirTime)
 
