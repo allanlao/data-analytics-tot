@@ -199,7 +199,4 @@ Bivariate analysis refers to the analysis of two variables to determine **relati
 #BiVariate Analysis
 
 
-```{r}
-plot(df)
-```
 
