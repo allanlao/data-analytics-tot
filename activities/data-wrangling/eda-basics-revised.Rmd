@@ -1,0 +1,39 @@
+---
+title: "Exploratory Data Analysis"
+subtitle: "using R Programming"
+author: "Allan R. Lao, MBA, DIT"
+date: "Department of ICT </br> `r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["rutgers", "rutgers-fonts"]
+    nature:
+     
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center") 
+```
+
+
+```{r include=TRUE, echo=FALSE}
+library(hflights)
+library(tidyverse)
+df <- as.data.frame(hflights)
+
+```
+# The hflights Dataset
+Includes data on all flights that departed **Houston, TX in 2011**
+
+---
+#Categorical Variables as Bar Plots
+
+```{r}
+plot(as.factor(df$Origin))
+```
+
+
+

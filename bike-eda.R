@@ -15,7 +15,7 @@ library(dplyr)
 library(ggplot2)
 
 
-setwd("~/lao-analytics/bike")
+setwd("~/lao-analytics/tot")
 
 
 df <- read.csv("Sales.csv")
@@ -27,9 +27,22 @@ products_by_category <- df %>%  select(Product_Category) %>%
   group_by(Product_Category) %>% summarise(Qty = n())
 products_by_category
 
+products_by_category %>% ggplot(aes(x = Product_Category, y=Qty)) +
+                  geom_bar(stat = "identity", color="blue", fill="steelblue")  +
+                  theme_minimal()
+#bars with labels
+
+products_by_category %>% ggplot(aes(x = Product_Category, y=Qty)) +
+  geom_bar(stat = "identity", color="blue", fill="steelblue")  +
+  geom_text(aes(label= Qty))
+  theme_minimal()                     
+  
 
 products_by_subcategory <- df %>%  select(Product_Category,Sub_Category) %>% 
   group_by(Product_Category,Sub_Category) %>% summarise(Qty = n())
+
+
+
 
 #sales per month arranged highest to lowest
 monthly_sales <- df %>% group_by(Month) %>% summarise(Total = sum(Unit_Price * Order_Quantity)) %>% 

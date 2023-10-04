@@ -1,23 +1,17 @@
 ---
 title: "Data Wrangling"
-subtitle: "using tidyverse"
-author: "Allan R. Lao, MBA, DIT"
-date: "Department of ICT </br> `r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    css: ["rutgers", "rutgers-fonts"]
-    nature:
-     
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
+author: "Allan R. Lao"
+date: "2023-10-04"
+output: 
+   ioslides_presentation:
+    css: styles.css
+    smaller: true
+    wide: true
 ---
-```{r setup, include=FALSE} 
-knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
-```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r message=FALSE, warning=FALSE, echo = FALSE}
 # install.packages("hflights")
@@ -27,31 +21,44 @@ library(dplyr)
 ```
 
 
-# The hflights Dataset
+## The hflights Dataset
 Includes data on all flights that departed **Houston, TX in 2011**
 
 ```{r}
 str(hflights)
 ```
----
-# The hflights Dataset
+
+## The hflights Dataset
 ```{r}
 knitr::kable(
-    head(hflights, 10),format = 'html'
+    hflights %>% select(1:6) %>% head( 10),format = 'html'
 )
 ```
 
----
+## Data Manipulation  {#font-color .smaller }
 
-# Data Manipulation
-Let’s say that you want to perform the following operations on the data —
+Let’s say that you want to perform the following operations on the data — 
 
 1. Filter for flights originating from IAH airport
 2. Count total flights and delayed flights by each carrier
 3. Convert it to a Delayed per thousand (DPH) metric
 4. Sort the result by DPH in descending order
 
-```{r include=TRUE}
+```{r include=TRUE, echo=TRUE}
+
+result <-  hflights %>%
+            filter(Origin == "IAH")%>%
+            mutate(FDelayed = if_else(DepDelay>0,TRUE,FALSE,missing=NULL))%>%
+            group_by(UniqueCarrier)%>%
+            summarise(No=n(),NumDelayed=sum(FDelayed,na.rm=TRUE))%>%
+            mutate(DPH=100*(NumDelayed/No))%>%
+            arrange(desc(DPH))
+
+```
+
+## Data Manipulation  {#font-color .smaller }
+
+```{r include=TRUE, echo=TRUE}
 
 result <-  hflights %>%
             filter(Origin == "IAH")%>%
@@ -65,19 +72,20 @@ result <-  hflights %>%
 
 
 
-
 ```{r }
 head(result)
 ```
 
 ---
-# Subset Variables ( columns) 
 
-.pull-left[
+## Subset Variables ( columns)  {#font-color .smaller }
 
-![Subset Columns](https://raw.githubusercontent.com/allanlao/data-analytics-tot/master/activities/data-wrangling/subset-columns.png)
-]
-.pull-right[
+<div style="float: left; width: 40%;">
+<br />
+<img src="https://raw.githubusercontent.com/allanlao/data-analytics-tot/master/activities/data-wrangling/subset-columns.png" style="width:95%;">
+</div>
+<div style="float: right; width: 50%;">
+<br />
 ```{r}
   d1 <- select(hflights, FlightNum,
              CarrierName = UniqueCarrier, 
@@ -93,11 +101,32 @@ head(result)
  head(d1)
 ```
 
+</div>
 
-]
+## Two column
 
----
-# Subset Variables ( columns) 
+<div class="columns-2"> 
+
+<img src="https://raw.githubusercontent.com/allanlao/data-analytics-tot/master/activities/data-wrangling/subset-columns.png" style="width:95%;">
+
+
+```{r}
+  d1 <- select(hflights, FlightNum,
+             CarrierName = UniqueCarrier, 
+             DepDelay,ArrDelay)
+
+  d2 <-select(hflights, FlightNum,
+            CarrierName = UniqueCarrier, 
+            contains("Delay"))
+```
+
+
+```{r}
+ head(d1)
+```
+</div>
+
+## Subset Variables ( columns) 
 
 **hflights** data
 ```{r echo=FALSE}
@@ -106,19 +135,17 @@ knitr::kable(
 )
 ```
 
-
+<br>
 Subset Data
-```{r}
+```{r class.source="bg-info"}
  d3 <- select(hflights,1:5)
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, df-drop-ok}
  head(d3)
 ```
 
----
-
-# the Pipe %>% 
+## the Pipe %>% 
 
 > The pipe operator %>% is used to express a sequence of multiple operations, for example, the output of one function or expression is passed to another function as an argument.
 
@@ -137,19 +164,22 @@ d1 <- hflights %>%  select(FlightNum,
 
 ```
 
->For every column selected, it is returned with a **vector** data type
----
-# Subset Variables ( rows) 
+> For every column selected, it is returned with a **vector** data type
 
-.pull-left[
 
-![Subset Columns](https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/subset-rows.png?raw=true)
-]
-.pull-right[
+## Subset Variables ( rows) 
+
+<div style="float: left; width: 40%;">
+<br />
+<img src="https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/subset-rows.png?raw=true" style="width:95%;">
+</div>
+<div style="float: right; width: 50%;">
+<br />
 ```{r}
-result <- hflights %>% filter(Origin == "IAH")
-
+ result <- hflights %>% filter(Origin == "IAH")
 ```
+
+
 
 ```{r echo=FALSE}
 knitr::kable(
@@ -157,12 +187,11 @@ knitr::kable(
 )
 ```
 
+</div>
 
 
-]
 
----
-# Filter and Select
+## Filter and Select
 >chaining two functions
 
 
@@ -183,9 +212,9 @@ knitr::kable(
 )
 ```
 
----
 
-# Other subset functions
+
+## Other subset functions
 
 Get the rows in positions 1 to 10
 
@@ -209,9 +238,9 @@ result2 <- slice(hflights, -1, -10)
 
 >Quicktip : Use negative numbers to “exclude” rows. Example: To exclude the first 10 rows, and keep the remaining rows in the dataset.
 
----
 
-# Other subset functions
+
+## Other subset functions
 
 ```{r}
 result <- hflights %>%  mutate(totalTaxing = TaxiIn+TaxiOut)
@@ -224,18 +253,20 @@ knitr::kable(
 )
 ```
 
----
-# Simple aggregation
 
-.pull-left[
-![](https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/summarize.png?raw=true)
+## Simple aggregation
+
+<div style="float: left; width: 40%;">
+
+<img src="https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/summarize.png?raw=true" style="width:95%;">
+</div>
+<div style="float: right; width: 50%;">
+<img src="https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/group.png?raw=true" style="width:95%;">
 
 
-]
+</div>
 
-.pull-right[
-![](https://github.com/allanlao/data-analytics-tot/blob/master/activities/data-wrangling/group.png?raw=true)
-
+## Simple aggregation
 ```{r}
   result <- hflights %>%
             group_by(UniqueCarrier)%>%
@@ -246,12 +277,11 @@ knitr::kable(
 
 ```{r echo=FALSE}
 knitr::kable(
-    head(result, 8),format = 'html'
+    head(result, 8)
 )
 ```
-]
----
-# Summarize  data
+
+## Summarize  data
 
 ```{r}
   result <- hflights %>%
@@ -266,8 +296,8 @@ knitr::kable(
    result
 )
 ```
----
-# Summarize  data
+
+## Summarize  data
 
 ```{r}
   result <- hflights %>%
@@ -283,7 +313,5 @@ knitr::kable(
 )
 ```
 
----
-class: inverse, center, middle
 
-#Hands On Activties
+

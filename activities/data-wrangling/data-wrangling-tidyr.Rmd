@@ -21,7 +21,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ```{r message=FALSE, warning=FALSE, echo = FALSE}
 # install.packages("hflights")
-setwd("~/data-analytics-tot")
+#setwd("~/data-analytics-tot")
 library("hflights")
 library(dplyr)
 ```

@@ -1,0 +1,31 @@
+---
+title: "Data Manipulation"
+author: "Allan Lao"
+date: "2023-10-04"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r message=FALSE, warning=FALSE, echo = FALSE}
+# install.packages("hflights")
+#setwd("~/data-analytics-tot")
+library("hflights")
+library(dplyr)
+
+
+```
+
+
+
+```{r}
+products_sold <- df %>%  filter(Country == "Canada") %>% 
+                         select(Product_Category, Product, Order_Quantity, Profit) %>% 
+                         group_by(Product_Category, Product) %>% 
+                         summarise(Total = sum(Order_Quantity)) %>% 
+                         arrange(desc(Total))
+```
+

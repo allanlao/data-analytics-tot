@@ -18,39 +18,13 @@ output:
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = "center") 
 ```
 
-
-# Exploratory Data Analysis
-Exploratory Data Analysis refers to the critical process of performing initial investigations on data so as to discover patterns, to spot anomalies, to test hypothesis and to check assumptions with the help of summary statistics and graphical representations
-
-
-![](https://www.researchgate.net/profile/Mahmoud_Elansary2/publication/352546274/figure/fig4/AS:1036518353289217@1624136641643/Exploratory-Data-Analysis-EDA-steps-source-7.png)
----
-#EDA Key Terms
-
-Before you begin exploratory data analysis, it's important to understand a few key terms:
-
-
-
--  **Value**: A data value is a piece of information, such as a number or a date.
-
-- **Variable**: A data variable is a characteristic that you can measure, such as weight or income.
-
-- **Distribution**: The distribution of a dataset is how the dataset is spread out. You can visualize a dataset's   distribution by observing its shape on a graph.
-- **Outlier**: An outlier is a data value that is significantly different, including much higher or lower, from the rest of a dataset.
-- **Data model**: A data model is a method of organizing data and relationships between values in a dataset.
-
 ---
 
-# Know your data
-
-The first step to conducting exploratory data analysis is to observe your dataset at a high level. Start by determining the size of your dataset, including how many rows and columns it has. This can help you predict any future issues you might have with your data.
-
----
 
 ```{r include=TRUE, echo=FALSE}
 library(hflights)
 library(tidyverse)
-
+df <- as.data.frame(hflights)
 ```
 # The hflights Dataset
 Includes data on all flights that departed **Houston, TX in 2011**
@@ -70,26 +44,7 @@ knitr::kable(
 )
 ```
 
----
 
-#What are Types of Data in Statistics
-
-.pull-left[
-![](https://cdn1.byjus.com/wp-content/uploads/2021/12/Types-of-Data-in-Statistics.png)
-]
-
-.pull-right[
-- **Categorical data** describes the data that fits into the categories.
-  ex. (Gender , Country)
-  
-- **Quantitative data** is also known as numerical data which represents the numerical value (i.e., how much, how often, how many). ex( age, sales, population)
-
-]
-
-
-Source : <https://byjus.com/maths/types-of-data-in-statistics/>
-
----
 
 #Converting to Factors
 
